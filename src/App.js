@@ -16,29 +16,33 @@ function App() {
       return priceA - priceB;
     });
     setData(sortedBeers);
-    setData(filteredBeers);
   }
 
   useEffect(() => {
     getData();
   }, []);
 
+  const BearCard = ({ beer }) => {
+    return (
+      <div
+        className='beerCard bg-white shadow-md rounded-lg overflow-hidden w-80 transform transition duration-300 hover:scale-105 hover:shadow-xl'
+      >
+        <img className='w-full h-48 object-cover' src={beer.image} alt={beer.name} />
+        <div className='p-4'>
+          <h2 className='text-xl font-semibold mb-2'>Name: {beer.name}</h2>
+          <p className='text-gray-700 mb-1'>Price: {beer.price}</p>
+          <p className='text-gray-700'>Rating: {beer.rating.average} ({beer.rating.reviews} reviews)</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="App p-4">
       <h1 className='text-2xl font-bold text-center mb-6'>Beers with Rating Above 4.5</h1>
-      <div className='flex mt-[30px]  flex-wrap gap-6 justify-center'>
+      <div className='flex mt-[30px] flex-wrap gap-6 justify-center'>
         {data.map(beer => (
-          <div
-            className='beerCard bg-white shadow-md rounded-lg overflow-hidden w-80 transform transition duration-300 hover:scale-105 hover:shadow-xl'
-            key={beer.id}
-          >
-            <img className='w-full h-48 object-cover' src={beer.image} alt={beer.name} />
-            <div className='p-4'>
-              <h2 className='text-xl font-semibold mb-2'>Name: {beer.name}</h2>
-              <p className='text-gray-700 mb-1'>Price: {beer.price}</p>
-              <p className='text-gray-700'>Rating: {beer.rating.average} ({beer.rating.reviews} reviews)</p>
-            </div>
-          </div>
+          <BearCard key={beer.id} beer={beer} />
         ))}
       </div>
     </div>
